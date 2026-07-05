@@ -1,143 +1,124 @@
-StudyGuide 
+# Study Planner
 
-About the Project
+## About
 
-StudyPilot AI is a study helper application that I built using Python, Streamlit, and the OpenAI API.
+StudyPilot AI is a study helper that I built using Python, Streamlit, and the OpenAI API.
 
-The purpose of this project is to help students study better. The application can summarize notes, find important concepts, create quiz questions, and give study suggestions.
+The goal of this project is to help students study more easily. The app can summarize notes, find important concepts, create quiz questions, and give study tips.
 
-Instead of using only one AI prompt, this project uses multiple AI agents. A Planner Agent first understands what the student wants and then decides which agents should work on the task.
+One interesting part of this project is the **Planner Agent**. Instead of always doing the same steps, it first understands what the student wants and then decides which AI agents should be used.
 
-Features
+---
 
-Summarize study notes
+## Project Architecture
 
-Find important concepts
+![Architecture](images/architecture.png)
 
-Generate quiz questions
+---
 
-Give study tips
+## Features
 
-Use a Planner Agent to choose the right AI agents
+* Summarize class notes
+* Find important concepts
+* Generate quiz questions
+* Give study tips
+* Planner Agent chooses which AI agents to use
 
-Simple and easy-to-use web interface
+---
 
-Project Architecture
+## Screenshots
 
-Student
-    │
-    ▼
-Streamlit App
-    │
-    ▼
-Planner Agent
-    │
- ┌─────────────┬──────────────┬──────────────┐
- │             │              │              │
- ▼             ▼              ▼              ▼
-Summarizer  Concept Agent  Quiz Agent  Learning Coach
-                     │
-                     ▼
-                 OpenAI API
-Technologies Used
+### Home Page
 
-Python
+![Home Page](images/home_page.png)
 
-Streamlit
+### Planner Decision
 
-OpenAI API
+![Planner Decision](images/planner_decision.png)
 
-python-dotenv
+### Quiz Output
 
-Git
+![Quiz Output](images/quiz_output.png)
 
-GitHub
+---
 
-Project Structure
+## Technologies Used
 
+* Python
+* Streamlit
+* OpenAI API
+* Git & GitHub
+
+---
+
+## Project Structure
+
+```text
 StudyPilot-AI/
+│
+├── app.py
+├── planner_agent.py
+├── agents/
+├── utils/
+├── images/
+├── requirements.txt
+└── README.md
+```
 
-app.py
-planner_agent.py
+---
 
-agents/
-    summarizer_agent.py
-    concept_agent.py
-    quiz_agent.py
-    learning_coach_agent.py
+## How to Run
 
-utils/
-    openai_client.py
+1. Clone the repository.
+2. Create a virtual environment.
+3. Install the required packages.
 
-requirements.txt
-README.md
-How It Works
-
-The student enters notes and a question.
-
-The Planner Agent understands the request.
-
-It decides which AI agents should be used.
-
-Each agent completes its own task.
-
-The results are shown in the Streamlit application.
-
-How to Run
-
-Clone the repository:
-
-git clone <repository-url>
-Create a virtual environment:
-
-python -m venv .venv
-Activate the virtual environment (Windows):
-
-.\.venv\Scripts\Activate.ps1
-Install the required packages:
-
+```bash
 pip install -r requirements.txt
-Create a .env file and add your OpenAI API key:
+```
 
+4. Add your OpenAI API key to a `.env` file.
+
+```text
 OPENAI_API_KEY=your_api_key
-Run the application:
+```
 
+5. Run the application.
+
+```bash
 streamlit run app.py
-Open your browser and go to:
+```
 
+6. Open your browser and go to:
+
+```text
 http://localhost:8501
-Future Improvements
+```
 
-Upload PDF notes
+---
 
-Save study history
+## What I Learned
 
-Better quiz questions
+While building this project, I learned:
 
-Progress tracking
+* Python
+* Streamlit
+* OpenAI API
+* Prompt Engineering
+* AI Agents
+* Git and GitHub
 
-Flashcards
+I also learned how different AI agents can work together to solve a problem.
 
-Support for more AI models
+---
 
-What I Learned
+## Future Improvements
 
-While working on this project, I learned:
+* Upload PDF notes
+* Save study history
+* Create flashcards
+* Support more AI models
 
-Python programming
+---
 
-OpenAI API
-
-Prompt engineering
-
-AI agents
-
-Streamlit
-
-Git and GitHub
-
-How AI applications are built
-
-Note
-
-This project was created as a learning project to understand AI agents and modern AI application development.
+This project was built for learning and to improve my Python and AI development skills.
