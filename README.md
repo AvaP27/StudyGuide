@@ -1,4 +1,4 @@
-# Study Planner
+# Study Guide / Planner
 
 ## About
 
