@@ -12,7 +12,7 @@ One interesting part of this project is the **Planner Agent**. Instead of always
 
 ## Project Architecture
 
-Screenshots will be added after deployment.
+![Architecture](images/architecture.png)
 
 ---
 
@@ -30,15 +30,16 @@ Screenshots will be added after deployment.
 
 ### Home Page
 
-Screenshots will be added after deployment.
+![Home Page](images/home_page.png)
 
 ### Planner Decision
 
-Screenshots will be added after deployment.
+![Planner Decision](images/planner_decision.png)
 
 ### Quiz Output
 
-Screenshots will be added after deployment.
+![Quiz Output](images/quiz_output.png)
+
 ---
 
 ## Technologies Used

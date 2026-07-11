@@ -11,29 +11,46 @@ from agents.learning_coach_agent import LearningCoachAgent
 class PlannerAgent:
     def decide_agents(self, user_request):
         prompt = f"""
-        You are a planner agent for a study assistant app.
+        Your only job is to decide which specialist agents should run.
 
         Available agents:
-        - summarizer
-        - concept
-        - quiz
-        - coach
+
+        - summarizer: summarizes notes
+        - concept: extracts important concepts and definitions
+        - quiz: generates quiz questions directly from the notes
+        - coach: gives study advice
+
+        Rules:
+
+        1. If the user only asks for a summary:
+        select only "summarizer".
+
+        2. If the user only asks for concepts or definitions:
+        select only "concept".
+
+        3. If the user only asks for quiz questions:
+        select only "quiz".
+
+        4. If the user only asks for study advice:
+        select only "coach".
+
+        5. If the user asks for full exam preparation:
+        select all four agents.
+
+        6. Do not select extra agents that the user did not request.
+
+        7. If the user gives a number of quiz questions, extract that number.
+        Otherwise use 5.
 
         User request:
         {user_request}
 
-        Decide which agents are needed.
+        Return valid JSON only in this format:
 
-        Rules:
-        - If user wants explanation, use summarizer and concept.
-        - If user wants quiz, use summarizer, concept, and quiz.
-        - If user has exam/test soon, use all agents.
-        - If unsure, use all agents.
-
-        Return JSON only:
         {{
-          "selected_agents": ["summarizer", "concept", "quiz", "coach"],
-          "reason": "short reason"
+        "selected_agents": ["quiz"],
+        "quiz_count": 10,
+        "reason": "The user requested only 10 quiz questions."
         }}
         """
 
@@ -47,30 +64,31 @@ class PlannerAgent:
                 "reason": "Planner response was not valid JSON, so all agents were selected."
             }
 
-    def run(self, notes, user_request):
+    def run(self, notes: str, user_request: str) -> dict:
         plan = self.decide_agents(user_request)
-        selected_agents = plan["selected_agents"]
+
+        selected = plan.get("selected_agents", [])
 
         result = {
-            "selected_agents": selected_agents,
-            "planner_reason": plan.get("reason", "")
+            "planner_reason": plan.get("reason", ""),
+            "selected_agents": selected
         }
 
-        if "summarizer" in selected_agents:
+        if "summarizer" in selected:
             result["summary"] = SummarizerAgent().run(notes)
 
-        if "concept" in selected_agents:
-            concept_input = result.get("summary", notes)
-            result["concepts"] = ConceptAgent().run(concept_input)
+        if "concept" in selected:
+            result["concepts"] = ConceptAgent().run(notes)
 
-        if "quiz" in selected_agents:
+        if "quiz" in selected:
             result["quiz"] = QuizAgent().run(
-                summary=result.get("summary", ""),
-                concepts=result.get("concepts", "")
+                notes=notes,
+                question_count=plan.get("quiz_count", 5)
             )
 
-        if "coach" in selected_agents:
+        if "coach" in selected:
             result["coach"] = LearningCoachAgent().run(
+                notes=notes,
                 summary=result.get("summary", ""),
                 concepts=result.get("concepts", ""),
                 quiz=result.get("quiz", "")

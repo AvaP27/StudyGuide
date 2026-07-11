@@ -21,7 +21,7 @@ if st.button("Generate Notes"):
     else:
         with st.spinner("Planner agent is deciding what to do..."):
             planner = PlannerAgent()
-            result = planner.run(notes, user_request)
+            result = planner.run(notes=notes, user_request=user_request)
 
         st.subheader("Planner Decision")
         st.write(result.get("planner_reason", ""))
